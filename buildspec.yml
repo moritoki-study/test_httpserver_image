@@ -11,11 +11,15 @@ phases:
       - echo Building the Docker image...          
       - echo "docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG ."
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - echo "docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
+      # for private repository
+      # - echo "docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      # - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
+      # for public repository
+      - echo "docker tag $IMAGE_REPO_NAME:$IMAGE_TAG public.ecr.aws/l8s6z2n6/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG public.ecr.aws/l8s6z2n6/$IMAGE_REPO_NAME:$IMAGE_TAG      
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - echo "docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo "docker push public.ecr.aws/l8s6z2n6/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - docker push public.ecr.aws/l8s6z2n6/$IMAGE_REPO_NAME:$IMAGE_TAG
